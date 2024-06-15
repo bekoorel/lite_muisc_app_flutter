@@ -1,7 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:music_app/components/player_widget.dart';
 import 'package:music_app/consetns/consetens.dart';
+import 'package:music_app/logic/player_logic.dart';
 
 class PlayerScreen extends StatefulWidget {
   const PlayerScreen({super.key});
@@ -11,31 +11,24 @@ class PlayerScreen extends StatefulWidget {
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-  late AudioPlayer player = AudioPlayer();
+  final _audioPlayer = AudioPlayer();
+  List<Map<String, String>> _audioFiles = [];
 
   @override
   void initState() {
     super.initState();
+    _fetchAudioFiles();
+  }
 
-    // Create the audio player.
-    player = AudioPlayer();
-
-    // Set the release mode to keep the source after playback has completed.
-    player.setReleaseMode(ReleaseMode.stop);
-
-    // Start the player as soon as the app is displayed.
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await player.setSource(AssetSource('assats/ambient_c_motion.mp3'));
-      await player.resume();
+  Future<void> _fetchAudioFiles() async {
+    List<Map<String, String>> files = await getAllAudioFiles();
+    setState(() {
+      _audioFiles = files;
     });
   }
 
-  @override
-  void dispose() {
-    // Release all sources and dispose the player.
-    player.dispose();
-
-    super.dispose();
+  void _playSound(String filePath) async {
+    await _audioPlayer.play(DeviceFileSource(filePath));
   }
 
   @override
@@ -78,11 +71,21 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           blurRadius: 30.0)
                     ]),
               ),
-              SizedBox(
+              Container(
+                color: Colors.amber,
                 height: heightScreen * 0.3,
                 width: widthScreen * 0.9,
-                child: PlayerWidget(player: player),
-              )
+                child: ListView.builder(
+                  itemCount: _audioFiles.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(_audioFiles[index]['name'] ?? 'Unknown',
+                          style: TextStyle(color: Colors.blue)),
+                      onTap: () => _playSound(_audioFiles[index]['path']!),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
