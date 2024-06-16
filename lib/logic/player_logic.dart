@@ -1,9 +1,10 @@
 import 'dart:io';
 
+//import 'package:path_provider/path_provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-List audioPath = [];
+List<String> musicFiles = [];
 Future<void> permissionCheck() async {
   print('stsrt');
 
@@ -32,12 +33,16 @@ Future<void> permissionCheck() async {
 
 getAllAudioFilesMusic() async {
   print('start fetsh');
-  Directory? musicDirectory = await getExternalStorageDirectory();
+  Directory? musicDirectory =Directory('/storage/emulated/0/Android/media'); //await getDownloadsDirectory();
+  //await getExternalStorageDirectory();
+  print(musicDirectory);
   print('.............1');
-  List<FileSystemEntity> files = musicDirectory!.listSync(recursive: true);
+  List<FileSystemEntity> files =
+      musicDirectory.listSync(recursive: Platform.isAndroid);
   print('.............2');
-  List<String> musicFiles = [];
+
   print('.............3');
+  print(files);
   for (FileSystemEntity entity in files) {
     print('.............4');
     String path = entity.path;
@@ -45,6 +50,7 @@ getAllAudioFilesMusic() async {
         path.endsWith('.m4a') ||
         path.endsWith('.wav')) {
       musicFiles.add(path);
+
     }
     print(musicFiles);
   }
