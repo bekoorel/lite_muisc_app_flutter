@@ -1,7 +1,8 @@
-import 'package:audioplayers/audioplayers.dart';
+//import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:music_app/consetns/consetens.dart';
 import 'package:music_app/logic/player_logic.dart';
+import 'package:permission_handler/permission_handler.dart' as reco;
 
 class PlayerScreen extends StatefulWidget {
   const PlayerScreen({super.key});
@@ -11,24 +12,12 @@ class PlayerScreen extends StatefulWidget {
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-  final _audioPlayer = AudioPlayer();
-  List<Map<String, String>> _audioFiles = [];
-
+  // final _audioPlayer = AudioPlayer();
   @override
-  void initState() {
+  initState() {
     super.initState();
-    _fetchAudioFiles();
-  }
-
-  Future<void> _fetchAudioFiles() async {
-    List<Map<String, String>> files = await getAllAudioFiles();
-    setState(() {
-      _audioFiles = files;
-    });
-  }
-
-  void _playSound(String filePath) async {
-    await _audioPlayer.play(DeviceFileSource(filePath));
+    reco.Permission.audio.request();
+    // permissionCheck();
   }
 
   @override
@@ -71,17 +60,22 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           blurRadius: 30.0)
                     ]),
               ),
+              TextButton(
+                  onPressed: () {
+                    // print('${_audioFiles.length}');
+                    // print('${_audioFiles[0]['name'] ?? 'Unknown'}');
+                    permissionCheck();
+                  },
+                  child: const Text('data')),
               Container(
                 color: Colors.amber,
-                height: heightScreen * 0.3,
+                height: heightScreen * 0.1,
                 width: widthScreen * 0.9,
                 child: ListView.builder(
-                  itemCount: _audioFiles.length,
+                  itemCount: 1,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(_audioFiles[index]['name'] ?? 'Unknown',
-                          style: TextStyle(color: Colors.blue)),
-                      onTap: () => _playSound(_audioFiles[index]['path']!),
+                    return const ListTile(
+                      title: Text('564646'),
                     );
                   },
                 ),

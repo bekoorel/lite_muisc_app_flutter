@@ -1,30 +1,51 @@
 import 'dart:io';
+
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-Future<List<Map<String, String>>> getAllAudioFiles() async {
+List audioPath = [];
+Future<void> permissionCheck() async {
+  print('stsrt');
+
+  var status = await Permission.storage.status;
+
+  if (!status.isGranted) {
+    print('use prm');
+    var pr = await Permission.audio.request();
+    print(pr);
+  }
+
   // طلب إذن الوصول إلى التخزين
-  if (!await Permission.storage.request().isGranted) {
-    return [];
+  if (status.isGranted) {
+    print('isGranted');
+    await getAllAudioFilesMusic();
+  } else {
+    print('no per');
   }
+  /*
+  final Directory tempDir = await getTemporaryDirectory();
 
-  // الحصول على دليل التخزين الخارجي
-  Directory? externalStorageDirectory = await getExternalStorageDirectory();
-  if (externalStorageDirectory == null) {
-    return [];
+  final Directory appDocumentsDir = await getExternalStorageDirectories();
+
+  */
+}
+
+getAllAudioFilesMusic() async {
+  print('start fetsh');
+  Directory? musicDirectory = await getExternalStorageDirectory();
+  print('.............1');
+  List<FileSystemEntity> files = musicDirectory!.listSync(recursive: true);
+  print('.............2');
+  List<String> musicFiles = [];
+  print('.............3');
+  for (FileSystemEntity entity in files) {
+    print('.............4');
+    String path = entity.path;
+    if (path.endsWith('.mp3') ||
+        path.endsWith('.m4a') ||
+        path.endsWith('.wav')) {
+      musicFiles.add(path);
+    }
+    print(musicFiles);
   }
-
-  // البحث عن الملفات الصوتية
-  List<FileSystemEntity> files = externalStorageDirectory.listSync(recursive: true);
-  List<Map<String, String>> audioFiles = files.where((file) {
-    String filePath = file.path.toLowerCase();
-    return filePath.endsWith('.mp3') || filePath.endsWith('.wav') || filePath.endsWith('.m4a') || filePath.endsWith('.aac');
-  }).map((file) {
-    return {
-      'path': file.path,
-      'name': file.path.split('/').last
-    };
-  }).toList();
-
-  return audioFiles;
 }
