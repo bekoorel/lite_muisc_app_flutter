@@ -1,11 +1,9 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'dart:io';
 
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:music_app/consetns/consetens.dart';
-import 'package:music_app/logic/player_logic.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:music_app/logic/chack_audio_files.dart';
+import 'package:music_app/logic/permashn.dart';
 
 class PlayerScreen extends StatefulWidget {
   const PlayerScreen({super.key});
@@ -15,28 +13,11 @@ class PlayerScreen extends StatefulWidget {
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-   final _audioPlayer = AudioPlayer();
+  final _audioPlayer = AudioPlayer();
   @override
-  initState() {
+  initState() async {
     super.initState();
-    permissionCheck();
-/*
-    if (Platform.isAndroid) {
-      final androidInfo = await DeviceInfoPlugin().androidInfo;
-      if (androidInfo.version.sdkInt <= 32) {
-        Permission.audio.request();
-        Permission.storage.request();
-        print('=<32');
-
-        /// use [Permissions.storage.status]
-      } else {
-        print('else');
-
-        /// use [Permissions.photos.status]
-      }
-    }*/
-
-    // permissionCheck();
+    await permissionCheck();
   }
 
   @override
@@ -83,8 +64,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   onPressed: () {
                     // print('${_audioFiles.length}');
                     // print('${_audioFiles[0]['name'] ?? 'Unknown'}');
-                   // permissionCheck();
-                    _audioPlayer.play( DeviceFileSource(musicFiles.first) );
+                    // permissionCheck();
+                    _audioPlayer.play(DeviceFileSource(musicFiles.first));
+                    
                   },
                   child: const Text('data')),
               Container(

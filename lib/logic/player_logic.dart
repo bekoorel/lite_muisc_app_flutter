@@ -1,57 +1,58 @@
-import 'dart:io';
+import 'package:audioplayers/audioplayers.dart';
 
-//import 'package:path_provider/path_provider.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+List<Map> playList = [
+  {'name': 'musicname', 'time': 2.25, 'path': 'c/file'}
+];
 
-List<String> musicFiles = [];
-Future<void> permissionCheck() async {
-  print('stsrt');
+class Player extends AudioPlayer {
+  static int indexed = 0;
+  static String name = 'غير محدد اسم';
+  static String path = 'غير محدد مكان';
+  static double duorashn = 0.0;
 
-  var status = await Permission.storage.status;
+  void player(String statePlayer) {
+    switch (statePlayer) {
+      //............play
+      case 'play':
+        AudioPlayer().play(DeviceFileSource(playList[indexed]['path']));
+        musicData();
+        break;
 
-  if (!status.isGranted) {
-    print('use prm');
-    var pr = await Permission.audio.request();
-    print(pr);
-  }
+      //...........stop
+      case 'stop':
+        AudioPlayer().stop();
+        break;
 
-  // طلب إذن الوصول إلى التخزين
-  if (status.isGranted) {
-    print('isGranted');
-    await getAllAudioFilesMusic();
-  } else {
-    print('no per');
-  }
-  /*
-  final Directory tempDir = await getTemporaryDirectory();
+      //...........next
+      case 'next':
+        AudioPlayer().stop();
+        indexed++;
+        AudioPlayer().play(DeviceFileSource(playList[indexed]['path']));
+        musicData();
+        break;
 
-  final Directory appDocumentsDir = await getExternalStorageDirectories();
+      //.........back
+      case 'back':
+        AudioPlayer().stop();
+        indexed--;
+        AudioPlayer().play(DeviceFileSource(playList[indexed]['path']));
+        musicData();
+        break;
 
-  */
-}
+//.........play from list
+//يجب اضافه الانديكس خارجيا قبل عمل الداله
+      case 'playfromlist':
+        AudioPlayer().stop();
 
-getAllAudioFilesMusic() async {
-  print('start fetsh');
-  Directory? musicDirectory =Directory('/storage/emulated/0/Android/media'); //await getDownloadsDirectory();
-  //await getExternalStorageDirectory();
-  print(musicDirectory);
-  print('.............1');
-  List<FileSystemEntity> files =
-      musicDirectory.listSync(recursive: Platform.isAndroid);
-  print('.............2');
-
-  print('.............3');
-  print(files);
-  for (FileSystemEntity entity in files) {
-    print('.............4');
-    String path = entity.path;
-    if (path.endsWith('.mp3') ||
-        path.endsWith('.m4a') ||
-        path.endsWith('.wav')) {
-      musicFiles.add(path);
-
+        AudioPlayer().play(DeviceFileSource(playList[indexed]['path']));
+        musicData();
+        break;
     }
-    print(musicFiles);
+  }
+
+  void musicData() {
+    name = playList[indexed]['name'];
+    path = playList[indexed]['path'];
+    duorashn = playList[indexed]['time'];
   }
 }
