@@ -1,28 +1,26 @@
+import 'package:on_audio_query/on_audio_query.dart';
 
+class FitchAudios {
+  Map<String, List<dynamic>> audioMap = {
+    'names': [],
+    'uris': [],
+    'ids': [],
+  };
 
+  // Method to fetch and populate the map
+  Future<Map<String, List>> audios() async {
+    final List<SongModel> data = await OnAudioQuery().querySongs();
 
-import 'dart:io';
-List<String> musicFiles = [];
-getAllAudioFilesMusic() async {
-  print('start fetsh');
-  Directory? musicDirectory =Directory('/storage/emulated/0/Android/media'); //await getDownloadsDirectory();
-  //await getExternalStorageDirectory();
-  print(musicDirectory);
-  print('.............1');
-  List<FileSystemEntity> files =
-      musicDirectory.listSync(recursive: Platform.isAndroid);
+    // Create an instance of FitchAudios
+    //FitchAudios fitchAudios = FitchAudios();
 
-  print(files);
-  for (FileSystemEntity entity in files) {
-    print('.............4');
-    String path = entity.path;
-       
-    if (path.endsWith('.mp3') ||
-        path.endsWith('.m4a') ||
-        path.endsWith('.wav')) {
-      musicFiles.add(path);
-
+    // Populate the map with data
+    for (SongModel song in data) {
+      audioMap['names']?.add(song.title);
+      audioMap['uris']?.add(song.data); // Handle null URI
+      audioMap['ids']?.add(song.id);
+      print('مسار الاغنيه :--${song.data}');
     }
-    print(musicFiles);
+    return audioMap;
   }
 }

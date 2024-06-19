@@ -1,58 +1,32 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
+import 'package:music_app/consetns/get_it.dart';
+import 'package:music_app/logic/chack_audio_files.dart';
 
-List<Map> playList = [
-  {'name': 'musicname', 'time': 2.25, 'path': 'c/file'}
-];
+class Player extends ChangeNotifier {
+  final audioPlayer = getIt<AudioPlayer>();
+  final fitchAudiosGitIt = getIt<FitchAudios>();
+  int get indexed => 0;
+  Map<String, List<dynamic>> get songesData {
+    return fitchAudiosGitIt.audioMap;
+  }
 
-class Player extends AudioPlayer {
-  static int indexed = 0;
-  static String name = 'غير محدد اسم';
-  static String path = 'غير محدد مكان';
-  static double duorashn = 0.0;
-
-  void player(String statePlayer) {
-    switch (statePlayer) {
-      //............play
-      case 'play':
-        AudioPlayer().play(DeviceFileSource(playList[indexed]['path']));
-        musicData();
-        break;
-
-      //...........stop
-      case 'stop':
-        AudioPlayer().stop();
-        break;
-
-      //...........next
-      case 'next':
-        AudioPlayer().stop();
-        indexed++;
-        AudioPlayer().play(DeviceFileSource(playList[indexed]['path']));
-        musicData();
-        break;
-
-      //.........back
-      case 'back':
-        AudioPlayer().stop();
-        indexed--;
-        AudioPlayer().play(DeviceFileSource(playList[indexed]['path']));
-        musicData();
-        break;
-
-//.........play from list
-//يجب اضافه الانديكس خارجيا قبل عمل الداله
-      case 'playfromlist':
-        AudioPlayer().stop();
-
-        AudioPlayer().play(DeviceFileSource(playList[indexed]['path']));
-        musicData();
-        break;
+  play(int ixplay) {
+    try {
+      audioPlayer.play(DeviceFileSource(songesData['uris']![ixplay]));
+      print(
+          'الرقم المختار من القائمه $ixplay-------${songesData['uris']![ixplay]}----');
+    } catch (e) {
+      print(e);
     }
   }
 
-  void musicData() {
-    name = playList[indexed]['name'];
-    path = playList[indexed]['path'];
-    duorashn = playList[indexed]['time'];
-  }
+  pauseSong() => audioPlayer.pause();
+  resumeSong() => audioPlayer.resume();
 }
+
+
+/*
+
+String path = 'file:///storage/FF3D-FD87/snaptube/download/SnapTube Audio/ويجز - بعودة يا بلادي _ (official music remix)(MP3_320K).mp3';
+String fullPath = 'file://$path';*/
