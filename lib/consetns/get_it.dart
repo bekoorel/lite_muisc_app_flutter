@@ -6,9 +6,9 @@ import 'package:music_app/logic/player_logic.dart';
 
 final getIt = GetIt.instance;
 
-void setup() {
+Future<void> setup() async {
+  getIt.registerSingleton<AudioPlayer>(AudioPlayer());
   getIt.registerSingleton<FitchAudios>(FitchAudios());
   getIt.registerSingleton<PermashnApp>(PermashnApp());
-  getIt.registerSingleton<AudioPlayer>(AudioPlayer());
   getIt.registerSingleton<Player>(Player());
 }

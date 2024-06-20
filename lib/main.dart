@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:music_app/consetns/get_it.dart';
 import 'package:music_app/screens/player_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setup();
+  await setup();
 
   runApp(
     const ProviderScope(
