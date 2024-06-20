@@ -6,23 +6,32 @@ import 'package:music_app/logic/chack_audio_files.dart';
 class Player extends ChangeNotifier {
   final audioPlayer = getIt<AudioPlayer>();
   final fitchAudiosGitIt = getIt<FitchAudios>();
-  int get indexed => 0;
+  int indexed = 0;
   Map<String, List<dynamic>> get songesData {
     return fitchAudiosGitIt.audioMap;
   }
 
-  play(int ixplay) {
-    try {
-      audioPlayer.play(DeviceFileSource(songesData['uris']![ixplay]));
-      print(
-          'الرقم المختار من القائمه $ixplay-------${songesData['uris']![ixplay]}----');
-    } catch (e) {
-      print(e);
+  setSoures(int ixplay) {
+    int length = songesData['uris']!.length;
+    if (ixplay < 0) {
+      indexed = length - 1;
+      print('ovaer back');
+    } else if (ixplay >= length) {
+      indexed = 0;
+      print('ovaer next');
+    } else {
+      indexed = ixplay;
+      print('normal select');
     }
+
+    print('-----$ixplay------$indexed------');
+    audioPlayer.setSourceDeviceFile(songesData['uris']![indexed]);
   }
 
   pauseSong() => audioPlayer.pause();
   resumeSong() => audioPlayer.resume();
+  stopSong() => audioPlayer.stop();
+  disposSong() => audioPlayer.dispose();
 }
 
 

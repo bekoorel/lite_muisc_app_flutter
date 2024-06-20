@@ -26,7 +26,8 @@ class DownList extends StatelessWidget {
               itemCount: playerGetIt.songesData['names']!.length,
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
-                  playerGetIt.play(index);
+                  playerGetIt.setSoures(index);
+                  playerGetIt.resumeSong();
                 },
                 child: ListTile(
                   title: Text(

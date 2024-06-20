@@ -1,6 +1,9 @@
+//import 'package:audioplayers/audioplayers.dart';
+//import 'package:music_app/consetns/get_it.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class FitchAudios {
+  // final getItAudioClass = getIt<AudioPlayer>();
   Map<String, List<dynamic>> audioMap = {
     'names': [],
     'uris': [],
@@ -23,4 +26,9 @@ class FitchAudios {
     }
     return audioMap;
   }
+/*
+  Future getDuration(String uri) async {
+    await getItAudioClass.setSourceDeviceFile(uri);
+    return await getItAudioClass.getDuration();
+  }*/
 }
