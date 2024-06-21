@@ -12,13 +12,13 @@ class ColorsApp {
       end: Alignment.bottomCenter,
       stops: const [
         0.0,
-        0.1
+        0.9
       ],
       colors: <Color>[
         gray,
         black,
       ]);
-
+/*
   static LinearGradient gradientOrang = LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomCenter,
@@ -29,5 +29,5 @@ class ColorsApp {
       colors: <Color>[
         lightOrang,
         orang,
-      ]);
+      ]);*/
 }

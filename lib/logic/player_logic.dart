@@ -7,6 +7,8 @@ class Player extends ChangeNotifier {
   final audioPlayer = getIt<AudioPlayer>();
   final fitchAudiosGitIt = getIt<FitchAudios>();
   int indexed = 0;
+  bool isPlaying = true;
+
   Map<String, List<dynamic>> get songesData {
     return fitchAudiosGitIt.audioMap;
   }
@@ -15,21 +17,25 @@ class Player extends ChangeNotifier {
     int length = songesData['uris']!.length;
     if (ixplay < 0) {
       indexed = length - 1;
-      print('ovaer back');
     } else if (ixplay >= length) {
       indexed = 0;
-      print('ovaer next');
     } else {
       indexed = ixplay;
-      print('normal select');
     }
-
-    print('-----$ixplay------$indexed------');
     audioPlayer.setSourceDeviceFile(songesData['uris']![indexed]);
+    notifyListeners();
   }
 
-  pauseSong() => audioPlayer.pause();
-  resumeSong() => audioPlayer.resume();
+  pauseSong() {
+    audioPlayer.pause();
+    notifyListeners();
+  }
+
+  resumeSong() {
+    audioPlayer.resume();
+    notifyListeners();
+  }
+
   stopSong() => audioPlayer.stop();
   disposSong() => audioPlayer.dispose();
 }

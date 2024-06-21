@@ -1,8 +1,9 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/material.dart';
 import 'package:music_app/consetns/get_it.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class FitchAudios {
+class FitchAudios extends ChangeNotifier {
   final getItAudioClass = getIt<AudioPlayer>();
   Map<String, List<dynamic>> audioMap = {
     'names': [],
@@ -27,11 +28,10 @@ class FitchAudios {
           audioMap['names']?.add(song.title);
           audioMap['uris']?.add(song.data);
           audioMap['ids']?.add(song.id);
-          print('مسار الاغنيه :--${song.data}');
         }
       }
     }
-
+    notifyListeners();
     return audioMap;
   }
 
