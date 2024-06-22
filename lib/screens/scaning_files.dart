@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:music_app/consetns/consetens.dart';
 
 class ScaningFiles extends StatelessWidget {
-  const ScaningFiles({super.key});
+  final String not;
+  const ScaningFiles({super.key, required this.not});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        'Scaning Your Music Files',
+        not,
         style: TextStyle(color: ColorsApp.lightOrang),
       ),
     );

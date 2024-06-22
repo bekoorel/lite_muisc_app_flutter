@@ -29,6 +29,18 @@ class _PlayerButtonsState extends State<PlayerButtons> {
       playerClassGet.setSoures(up);
       playerClassGet.resumeSong();
     });
+    // Configure the player
+    isPlayerGet.onDurationChanged.listen((Duration d) {
+      setState(() {
+        playerClassGet.duration = d;
+      });
+    });
+
+    isPlayerGet.onPositionChanged.listen((Duration p) {
+      setState(() {
+        playerClassGet.position = p;
+      });
+    });
   }
 
   @override
@@ -38,11 +50,17 @@ class _PlayerButtonsState extends State<PlayerButtons> {
       children: [
         SizedBox(
           width: MediaQuery.sizeOf(context).width / 1.5,
-          child: Consumer(
-            builder: (context, ref, child) => const LinearProgressIndicator(
-              value: 0.8,
-            ),
-          ),
+          height: MediaQuery.sizeOf(context).height / 7,
+          child: Consumer(builder: (context, ref, child) {
+            return Slider(
+              value: ref.watch(playerNotifiy).position.inSeconds.toDouble(),
+              min: 0.0,
+              max: ref.watch(playerNotifiy).duration.inSeconds.toDouble(),
+              onChanged: (double value) {
+                ref.read(playerNotifiy).seekBar(value);
+              },
+            );
+          }),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

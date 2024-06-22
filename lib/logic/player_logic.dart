@@ -8,6 +8,8 @@ class Player extends ChangeNotifier {
   final fitchAudiosGitIt = getIt<FitchAudios>();
   int indexed = 0;
   bool isPlaying = true;
+  Duration duration = const Duration();
+  Duration position = const Duration();
 
   Map<String, List<dynamic>> get songesData {
     return fitchAudiosGitIt.audioMap;
@@ -38,10 +40,10 @@ class Player extends ChangeNotifier {
 
   stopSong() => audioPlayer.stop();
   disposSong() => audioPlayer.dispose();
+
+  void seekBar(double value) {
+    final position = Duration(seconds: value.toInt());
+    audioPlayer.seek(position);
+    notifyListeners();
+  }
 }
-
-
-/*
-
-String path = 'file:///storage/FF3D-FD87/snaptube/download/SnapTube Audio/ويجز - بعودة يا بلادي _ (official music remix)(MP3_320K).mp3';
-String fullPath = 'file://$path';*/

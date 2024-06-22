@@ -34,10 +34,16 @@ class _PlayerScreenState extends State<PlayerScreen> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
             child: Consumer(builder: (context, ref, child) {
-              if (ref.watch(fitchAudiosNotifiy).audioMap['names']!.isEmpty) {
-                return const ScaningFiles();
+              if (ref.watch(fitchAudiosNotifiy).audioMap['names'] == null) {
+                return const ScaningFiles(
+                  not: 'No Music In Your Device',
+                );
               } else {
-                return const LayoutScreen();
+                if (ref.watch(fitchAudiosNotifiy).audioMap['names']!.isEmpty) {
+                  return const ScaningFiles(not: 'Scaning Music');
+                } else {
+                  return const LayoutScreen();
+                }
               }
             }),
           ),
