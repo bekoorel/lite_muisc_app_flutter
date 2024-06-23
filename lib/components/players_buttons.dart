@@ -41,6 +41,7 @@ class _PlayerButtonsState extends State<PlayerButtons> {
         playerClassGet.position = p;
       });
     });
+   
   }
 
   @override
@@ -88,7 +89,7 @@ class _PlayerButtonsState extends State<PlayerButtons> {
                           (s == PlayerState.playing);
                     },
                   );
-                  if (ref.watch(playerNotifiy).isPlaying) {
+                  if (ref.read(playerNotifiy).isPlaying) {
                     ref.read(playerNotifiy).pauseSong();
                   } else {
                     ref.read(playerNotifiy).resumeSong();

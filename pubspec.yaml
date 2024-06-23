@@ -44,6 +44,12 @@ dependencies:
   get_it: ^7.7.0
   text_scroll: ^0.2.0
   flutter_native_splash: ^2.4.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  image_path: "assets/iconm.png"
+  android: true
+  ios: true
 
 dev_dependencies:
   flutter_test:
@@ -68,7 +74,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets\splach.png
+    - assets/splach.png
+    - assets/iconm.png
 
   #   - images/a_dot_ham.jpeg
 

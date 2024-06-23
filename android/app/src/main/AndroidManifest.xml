@@ -11,7 +11,8 @@
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 
     <application
-        android:label="music_app"
+        android:enableOnBackInvokedCallback="true"
+        android:label="ATLAS"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

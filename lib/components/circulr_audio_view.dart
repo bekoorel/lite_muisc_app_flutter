@@ -15,11 +15,11 @@ class AudioView extends StatelessWidget {
       width: MediaQuery.sizeOf(context).width / 1.2,
       child: Consumer(
         builder: (context, ref, child) => QueryArtworkWidget(
-          artworkBorder: BorderRadius.circular(50),
+          artworkBorder: BorderRadius.circular(8),
           artworkFit: BoxFit.cover,
           id: ref.watch(playerNotifiy).songesData['ids']![playerGetIt.indexed],
           type: ArtworkType.AUDIO,
-          nullArtworkWidget: const Icon(Icons.music_note_sharp, size: 600),
+          nullArtworkWidget: const Icon(Icons.music_note_sharp, size: 100),
           size: 1000,
         ),
       ),

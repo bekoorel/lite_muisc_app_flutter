@@ -1,16 +1,24 @@
-# music_app
+# ATLAS_MUSIC_APP
 
-A new Flutter project.
+### USED_PKG
 
-## Getting Started
+###  audioplayers: ^6.0.0
+###  permission_handler: ^11.3.1
+###  path_provider: ^2.1.3
+###  on_audio_query: ^2.9.0
+###  modal_bottom_sheet: ^3.0.0
+###  flutter_screenutil: ^5.9.3
+###  flutter_riverpod: ^2.5.1
+###  get_it: ^7.7.0
+###  text_scroll: ^0.2.0
+###  flutter_native_splash: ^2.4.0
+###  flutter_launcher_icons: ^0.13.1
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+<img src="images/1.jpg" width="300" />
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<img src="images/2.jpg" width="300" />
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="images/3.jpg" width="300" />
+
+<img src="images/4.jpg" width="300" />

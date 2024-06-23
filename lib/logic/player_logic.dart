@@ -16,6 +16,7 @@ class Player extends ChangeNotifier {
   }
 
   setSoures(int ixplay) {
+    
     int length = songesData['uris']!.length;
     if (ixplay < 0) {
       indexed = length - 1;
